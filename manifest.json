@@ -6,7 +6,8 @@
    "background": {
      "service_worker": "background.js"
    },
-   "permissions": ["storage","activeTab", "scripting", "webRequest" ],
+   
+   "permissions": ["storage","activeTab", "scripting", "webRequest", "webNavigation" ],
    "host_permissions": [
     "*://*.discord.com/"
 ],
