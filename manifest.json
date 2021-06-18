@@ -9,7 +9,7 @@
    
    "permissions": ["storage","activeTab", "scripting", "webRequest", "webNavigation" ],
    "host_permissions": [
-    "*://*.discord.com/"
+    "*://*.discord.com/*"
 ],
    "action": {
       "default_popup": "popup.html",
