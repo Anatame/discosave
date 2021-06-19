@@ -103,48 +103,53 @@ function injectMain() {
             try {
               var buttonGroupDiv
               if (item.childNodes.length == 3) {
-                 buttonGroupDiv = item.childNodes[2].childNodes[0].childNodes[0];
+                buttonGroupDiv = item.childNodes[2].childNodes[0].childNodes[0];
               } else if (item.childNodes.length == 4) {
-                 buttonGroupDiv = item.childNodes[3].childNodes[0].childNodes[0];
+                buttonGroupDiv = item.childNodes[3].childNodes[0].childNodes[0];
+              }
+
+            if (buttonGroupDiv.childNodes.length == 3) {
+                
+                var button = document.createElement("BUTTON");
+                button.innerHTML = "Button";
+                buttonGroupDiv.style.backgroundColor = "red";
+                buttonGroupDiv.appendChild(button);
+                btnNum = 1;
+                button.addEventListener("click", (event) => {
+                  console.log("clicked");
+  
+                  var messageContainer = item.childNodes[0];
+  
+                  console.log(messageContainer.childNodes.length != 3);
+  
+                  if (messageContainer.childNodes.length == 2) {
+                    console.log("contained");
+                    console.log(messageContainer.childNodes[1].innerHTML);
+  
+                    chrome.storage.sync.set({
+                      message: messageContainer.childNodes[1].innerHTML
+                    });
+                  } else if(messageContainer.childNodes.length == 3) {
+                    console.log("alone");
+                    console.log(messageContainer.childNodes[2].innerHTML);
+  
+                    chrome.storage.sync.set({
+                      message: messageContainer.childNodes[2].innerHTML
+                    });
+                  } else if(messageContainer.childNodes.length == 4) {
+                    console.log("alone");
+                    console.log(messageContainer.childNodes[3].innerHTML);
+  
+                    chrome.storage.sync.set({
+                      message: messageContainer.childNodes[3].innerHTML
+                    });
+                  }
+  
+                  
+                });
               }
         
-              var button = document.createElement("BUTTON");
-              button.innerHTML = "Button";
-              buttonGroupDiv.style.backgroundColor = "red";
-              buttonGroupDiv.appendChild(button);
-              btnNum = 1;
-              button.addEventListener("click", (event) => {
-                console.log("clicked");
-
-                var messageContainer = item.childNodes[0];
-
-                console.log(messageContainer.childNodes.length != 3);
-
-                if (messageContainer.childNodes.length == 2) {
-                  console.log("contained");
-                  console.log(messageContainer.childNodes[1].innerHTML);
-
-                  chrome.storage.sync.set({
-                    message: messageContainer.childNodes[1].innerHTML
-                  });
-                } else if(messageContainer.childNodes.length == 3) {
-                  console.log("alone");
-                  console.log(messageContainer.childNodes[2].innerHTML);
-
-                  chrome.storage.sync.set({
-                    message: messageContainer.childNodes[2].innerHTML
-                  });
-                } else if(messageContainer.childNodes.length == 4) {
-                  console.log("alone");
-                  console.log(messageContainer.childNodes[3].innerHTML);
-
-                  chrome.storage.sync.set({
-                    message: messageContainer.childNodes[3].innerHTML
-                  });
-                }
-
-                
-              });
+          
             } catch (err) {
               // if any error, Code throws the error
               // console.log("not found")
