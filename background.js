@@ -1,5 +1,12 @@
 let color = '#3aa757';
 
+
+
+chrome.storage.sync.set({
+  svg: chrome.runtime.getURL("/images/savewhite.svg")
+});
+
+
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.sync.set({
     color
@@ -89,9 +96,12 @@ async function activateScript() {
   });
 }
 
+
+
 function injectMain() {
 
   // function activate(){
+  let svg = chrome.runtime.getURL("/images/savewhite.svg")
   let mainElement = document.querySelectorAll(".cozyMessage-3V1Y8y");
   if (mainElement) {
     console.log("defined")
@@ -104,54 +114,66 @@ function injectMain() {
           try {
             var buttonGroupDiv
             var messageContainer
-            if (item.childNodes.length == 3) {
+            // buttonContainer-DHceWr
+            if (item.childNodes.length == 3 && item.childNodes[2].classList.contains("buttonContainer-DHceWr")) {
               buttonGroupDiv = item.childNodes[2].childNodes[0].childNodes[0];
               messageContainer = item.childNodes[0];
-            } else if (item.childNodes.length == 4) {
+            } else if (item.childNodes.length == 4 && item.childNodes[3].classList.contains("buttonContainer-DHceWr")) {
               buttonGroupDiv = item.childNodes[3].childNodes[0].childNodes[0];
               messageContainer = item.childNodes[1];
             }
 
-            if (buttonGroupDiv.childNodes.length <= 3 && !buttonGroupDiv.childNodes[buttonGroupDiv.childNodes.length - 1].classList.contains("btn")) {
-
-              var button = document.createElement("BUTTON");
-              button.innerHTML = "Save";
-              button.classList.add('btn')
-              buttonGroupDiv.style.backgroundColor = "#121212";
-              buttonGroupDiv.appendChild(button);
-              btnNum = 1;
-              button.addEventListener("click", (event) => {
-                console.log("clicked");
-
-                
-
-                console.log(messageContainer.childNodes.length != 3);
-
-                if (messageContainer.childNodes.length == 2) {
-                  console.log("contained");
-                  console.log(messageContainer.childNodes[1].innerHTML);
-
-                  chrome.storage.sync.set({
-                    message: messageContainer.childNodes[1].innerHTML
-                  });
-                } else if (messageContainer.childNodes.length == 3) {
-                  console.log("alone");
-                  console.log(messageContainer.childNodes[2].innerHTML);
-
-                  chrome.storage.sync.set({
-                    message: messageContainer.childNodes[2].innerHTML
-                  });
-                } else if (messageContainer.childNodes.length == 4) {
-                  console.log("containsReply");
-                  console.log(messageContainer.childNodes[3].innerHTML + " ahh");
-
-                  chrome.storage.sync.set({
-                    message: messageContainer.childNodes[3].innerHTML
-                  });
-                }
+            if (buttonGroupDiv.childNodes.length <= 3 && !buttonGroupDiv.childNodes[0].classList.contains("btn")) {
 
 
-              });
+              chrome.storage.sync.get(["color", "message", "svg"], ({
+                color,
+                message,
+                svg
+              }) => {
+
+                let div = document.createElement("div");
+                div.innerText = "Save";
+                div.classList.add('btn')
+                div.style.backgroundImage = "url(" + svg +")"
+                buttonGroupDiv.style.backgroundColor = "#121212";
+                buttonGroupDiv.prepend(div);
+                btnNum = 1;
+                div.addEventListener("click", (event) => {
+                  console.log("clicked");
+
+
+
+                  console.log(messageContainer.childNodes.length != 3);
+
+                  if (messageContainer.childNodes.length == 2) {
+                    console.log("contained");
+                    console.log(messageContainer.childNodes[1].innerHTML);
+
+                    chrome.storage.sync.set({
+                      message: messageContainer.childNodes[1].innerHTML
+                    });
+                  } else if (messageContainer.childNodes.length == 3) {
+                    console.log("alone");
+                    console.log(messageContainer.childNodes[2].innerHTML);
+
+                    chrome.storage.sync.set({
+                      message: messageContainer.childNodes[2].innerHTML
+                    });
+                  } else if (messageContainer.childNodes.length == 4) {
+                    console.log("containsReply");
+                    console.log(messageContainer.childNodes[3].innerHTML + " ahh");
+
+                    chrome.storage.sync.set({
+                      message: messageContainer.childNodes[3].innerHTML
+                    });
+                  }
+
+
+                });
+              })
+
+
             }
 
 
