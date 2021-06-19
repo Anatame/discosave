@@ -101,7 +101,12 @@ async function activateScript() {
 function injectMain() {
 
   // function activate(){
-  let svg = chrome.runtime.getURL("/images/savewhite.svg")
+    let img;
+    chrome.storage.sync.get(["color", "message", "svg"], ({ color, message, svg }) => {
+      img = svg
+      console.log(svg)
+    })
+
   let mainElement = document.querySelectorAll(".cozyMessage-3V1Y8y");
   if (mainElement) {
     console.log("defined")
@@ -123,57 +128,48 @@ function injectMain() {
               messageContainer = item.childNodes[1];
             }
 
-            if (buttonGroupDiv.childNodes.length <= 3 && !buttonGroupDiv.childNodes[0].classList.contains("btn")) {
+            if (buttonGroupDiv.childNodes.length <= 3 && !buttonGroupDiv.childNodes[buttonGroupDiv.childNodes.length - 1].classList.contains("btn")) {
 
-
-              chrome.storage.sync.get(["color", "message", "svg"], ({
-                color,
-                message,
-                svg
-              }) => {
-
-                let div = document.createElement("div");
-                div.innerText = "Save";
-                div.classList.add('btn')
-                div.style.backgroundImage = "url(" + svg +")"
-                buttonGroupDiv.style.backgroundColor = "#121212";
-                buttonGroupDiv.prepend(div);
-                btnNum = 1;
-                div.addEventListener("click", (event) => {
-                  console.log("clicked");
+    
+              let div = document.createElement("div");
+              div.innerText = "Save";
+              div.classList.add('btn')
+              div.style.background = `url(${img})`
+              buttonGroupDiv.style.backgroundColor = "#121212";
+              buttonGroupDiv.prepend(div);
+              btnNum = 1;
+              div.addEventListener("click", (event) => {
+                console.log("clicked");
 
 
 
-                  console.log(messageContainer.childNodes.length != 3);
+                console.log(messageContainer.childNodes.length != 3);
 
-                  if (messageContainer.childNodes.length == 2) {
-                    console.log("contained");
-                    console.log(messageContainer.childNodes[1].innerHTML);
+                if (messageContainer.childNodes.length == 2) {
+                  console.log("contained");
+                  console.log(messageContainer.childNodes[1].innerHTML);
 
-                    chrome.storage.sync.set({
-                      message: messageContainer.childNodes[1].innerHTML
-                    });
-                  } else if (messageContainer.childNodes.length == 3) {
-                    console.log("alone");
-                    console.log(messageContainer.childNodes[2].innerHTML);
+                  chrome.storage.sync.set({
+                    message: messageContainer.childNodes[1].innerHTML
+                  });
+                } else if (messageContainer.childNodes.length == 3) {
+                  console.log("alone");
+                  console.log(messageContainer.childNodes[2].innerHTML);
 
-                    chrome.storage.sync.set({
-                      message: messageContainer.childNodes[2].innerHTML
-                    });
-                  } else if (messageContainer.childNodes.length == 4) {
-                    console.log("containsReply");
-                    console.log(messageContainer.childNodes[3].innerHTML + " ahh");
+                  chrome.storage.sync.set({
+                    message: messageContainer.childNodes[2].innerHTML
+                  });
+                } else if (messageContainer.childNodes.length == 4) {
+                  console.log("containsReply");
+                  console.log(messageContainer.childNodes[3].innerHTML + " ahh");
 
-                    chrome.storage.sync.set({
-                      message: messageContainer.childNodes[3].innerHTML
-                    });
-                  }
-
-
-                });
-              })
+                  chrome.storage.sync.set({
+                    message: messageContainer.childNodes[3].innerHTML
+                  });
+                }
 
 
+              });
             }
 
 
