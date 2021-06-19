@@ -115,9 +115,9 @@ function injectMain() {
             if (buttonGroupDiv.childNodes.length <= 3 && !buttonGroupDiv.childNodes[buttonGroupDiv.childNodes.length - 1].classList.contains("btn")) {
 
               var button = document.createElement("BUTTON");
-              button.innerHTML = "Button";
+              button.innerHTML = "Save";
               button.classList.add('btn')
-              buttonGroupDiv.style.backgroundColor = "red";
+              buttonGroupDiv.style.backgroundColor = "#121212";
               buttonGroupDiv.appendChild(button);
               btnNum = 1;
               button.addEventListener("click", (event) => {
