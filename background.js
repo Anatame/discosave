@@ -127,14 +127,17 @@ function injectMain() {
         // console.log(item.childNodes[2].childNodes[0].childNodes[0])
         if (btnNum == 0) {
           try {
-            var buttonGroupDiv
-            var messageContainer
+            let buttonGroupDiv
+            let messageContainer
+            let wrapper;
             // buttonContainer-DHceWr
             if (item.childNodes.length == 3 && item.childNodes[2].classList.contains("buttonContainer-DHceWr")) {
               buttonGroupDiv = item.childNodes[2].childNodes[0].childNodes[0];
+              wrapper = item.childNodes[2].childNodes[0]
               messageContainer = item.childNodes[0];
             } else if (item.childNodes.length == 4 && item.childNodes[3].classList.contains("buttonContainer-DHceWr")) {
               buttonGroupDiv = item.childNodes[3].childNodes[0].childNodes[0];
+              wrapper = item.childNodes[3].childNodes[0]
               messageContainer = item.childNodes[1];
             }
 
@@ -149,16 +152,16 @@ function injectMain() {
               button.style.backgroundImage = `url(${img})`
               button.style.backgroundRepeat = "no-repeat"
               button.style.backgroundSize = 'contain'
-              button.style.width = "24px"
-              button.style.height = "24px"
+              button.style.width = "22px"
+              button.style.height = "22px"
               button.style.backgroundColor = "transparent"
               // button.style.margin = "4px"
-              buttonGroupDiv.style.backgroundColor = "#121212";
+              // buttonGroupDiv.style.backgroundColor = "#121212";
               div.appendChild(button)
               buttonGroupDiv.prepend(div);
               btnNum = 1;
 
-              ["click", "mouseover", "mouseout", "mousedown", "mouseup"].forEach(function (e) {
+              ["click", "mouseenter", "mouseout", "mousedown", "mouseup"].forEach(function (e) {
                 button.addEventListener(e, (event) => {
                   if (event.type == "click") {
                     console.log("click")
@@ -186,11 +189,27 @@ function injectMain() {
                       });
                     }
 
-                  } else if (event.type == "mouseover") {
-                    console.log("mouseover" + event.type);
+                  } else if (event.type == "mouseenter") {
+                    console.log("mouseenter" + event.type);
                     div.style.backgroundColor = "#4f545c29"
                     button.style.backgroundImage = `url(${imgHover})`
-                  } else if (event.type == "mouseout") {
+
+                    let toolTip = document.createElement("div")
+                    toolTip.innerText = "Save"
+                    toolTip.style.padding = "10px"
+                    toolTip.style.marginTop = "-72px"
+                    toolTip.style.left = "-5px"
+                    toolTip.style.borderRadius = "6px 6px 0px 6px"
+                    toolTip.style.zIndex = "9999"
+                    toolTip.style.position = "absolute"
+                    toolTip.style.backgroundColor = "#18191d"
+                    toolTip.style.color = "#DCDDDE"
+                    toolTip.style.fontSize = "14px"
+                    toolTip.style.fontWeight = "500"
+                    if (wrapper.childNodes.length == 1) {
+                      wrapper.append(toolTip)
+                    }
+                    } else if (event.type == "mouseout") {
                     console.log("mouseover" + event.type);
                     div.style.backgroundColor = "transparent"
                     button.style.backgroundImage = `url(${img})`
