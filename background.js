@@ -4,7 +4,8 @@ let color = '#3aa757';
 
 chrome.storage.sync.set({
   svg: chrome.runtime.getURL("/images/savewhite.svg"),
-  svgHover: chrome.runtime.getURL("/images/savewhitehover.svg")
+  svgHover: chrome.runtime.getURL("/images/savewhitehover.svg"),
+  svgClick: chrome.runtime.getURL("/images/savewhiteClick.svg"),
 });
 
 
@@ -102,16 +103,17 @@ async function activateScript() {
 function injectMain() {
 
   // function activate(){
-  let img;
-  let imgHover;
-  chrome.storage.sync.get(["color", "message", "svg", "svgHover"], ({
+  let img, imgHover, imgClick;
+  chrome.storage.sync.get(["color", "message", "svg", "svgHover", "svgClick"], ({
     color,
     message,
     svg,
-    svgHover
+    svgHover,
+    svgClick
   }) => {
     img = svg
     imgHover = svgHover
+    imgClick = svgClick
     console.log(svg)
   })
 
@@ -156,7 +158,7 @@ function injectMain() {
               buttonGroupDiv.prepend(div);
               btnNum = 1;
 
-              ["click", "mouseover", "mouseout"].forEach(function (e) {
+              ["click", "mouseover", "mouseout", "mousedown", "mouseup"].forEach(function (e) {
                 button.addEventListener(e, (event) => {
                   if (event.type == "click") {
                     console.log("click")
@@ -192,7 +194,16 @@ function injectMain() {
                     console.log("mouseover" + event.type);
                     div.style.backgroundColor = "transparent"
                     button.style.backgroundImage = `url(${img})`
+                  } else if (event.type == "mousedown") {
+                    console.log("mouseover" + event.type);
+                    button.style.backgroundImage = `url(${imgClick})`
+                  } else if (event.type == "mouseup") {
+                    console.log("mouseover" + event.type);
+                    button.style.backgroundImage = `url(${imgHover})`
                   }
+
+
+
                   console.log(messageContainer.childNodes.length != 3);
 
                 });
