@@ -3,7 +3,8 @@ let color = '#3aa757';
 
 
 chrome.storage.sync.set({
-  svg: chrome.runtime.getURL("/images/savewhite.svg")
+  svg: chrome.runtime.getURL("/images/savewhite.svg"),
+  svgHover: chrome.runtime.getURL("/images/savewhitehover.svg")
 });
 
 
@@ -102,12 +103,15 @@ function injectMain() {
 
   // function activate(){
   let img;
-  chrome.storage.sync.get(["color", "message", "svg"], ({
+  let imgHover;
+  chrome.storage.sync.get(["color", "message", "svg", "svgHover"], ({
     color,
     message,
-    svg
+    svg,
+    svgHover
   }) => {
     img = svg
+    imgHover = svgHover
     console.log(svg)
   })
 
@@ -136,7 +140,8 @@ function injectMain() {
 
 
               let div = document.createElement("div");
-              div.style.width = "100%";
+              // div.style.width = "100%";
+              div.classList.add('button-1ZiXG9')
               let button = document.createElement("button");
               button.classList.add('btn')
               button.style.backgroundImage = `url(${img})`
@@ -145,7 +150,7 @@ function injectMain() {
               button.style.width = "24px"
               button.style.height = "24px"
               button.style.backgroundColor = "transparent"
-              button.style.margin = "4px"
+              // button.style.margin = "4px"
               buttonGroupDiv.style.backgroundColor = "#121212";
               div.appendChild(button)
               buttonGroupDiv.prepend(div);
@@ -158,33 +163,35 @@ function injectMain() {
 
                     if (messageContainer.childNodes.length == 2) {
                       console.log("contained");
-                      console.log(messageContainer.childNodes[1].innerHTML);
+                      console.log(messageContainer.childNodes[1].innerText);
   
                       chrome.storage.sync.set({
-                        message: messageContainer.childNodes[1].innerHTML
+                        message: messageContainer.childNodes[1].innerText
                       });
                     } else if (messageContainer.childNodes.length == 3) {
                       console.log("alone");
-                      console.log(messageContainer.childNodes[2].innerHTML);
+                      console.log(messageContainer.childNodes[2].innerText);
   
                       chrome.storage.sync.set({
-                        message: messageContainer.childNodes[2].innerHTML
+                        message: messageContainer.childNodes[2].innerText
                       });
                     } else if (messageContainer.childNodes.length == 4) {
                       console.log("containsReply");
-                      console.log(messageContainer.childNodes[3].innerHTML + " ahh");
+                      console.log(messageContainer.childNodes[3].innerText + " ahh");
   
                       chrome.storage.sync.set({
-                        message: messageContainer.childNodes[3].innerHTML
+                        message: messageContainer.childNodes[3].innerText
                       });
                     }
 
                   } else if (event.type == "mouseover") {
                     console.log("mouseover" + event.type);
                     div.style.backgroundColor = "#4f545c29"
+                    button.style.backgroundImage = `url(${imgHover})`
                   } else if (event.type == "mouseout") {
                     console.log("mouseover" + event.type);
                     div.style.backgroundColor = "transparent"
+                    button.style.backgroundImage = `url(${img})`
                   }
                   console.log(messageContainer.childNodes.length != 3);
 
