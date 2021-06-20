@@ -101,11 +101,15 @@ async function activateScript() {
 function injectMain() {
 
   // function activate(){
-    let img;
-    chrome.storage.sync.get(["color", "message", "svg"], ({ color, message, svg }) => {
-      img = svg
-      console.log(svg)
-    })
+  let img;
+  chrome.storage.sync.get(["color", "message", "svg"], ({
+    color,
+    message,
+    svg
+  }) => {
+    img = svg
+    console.log(svg)
+  })
 
   let mainElement = document.querySelectorAll(".cozyMessage-3V1Y8y");
   if (mainElement) {
@@ -130,46 +134,64 @@ function injectMain() {
 
             if (buttonGroupDiv.childNodes.length <= 3 && !buttonGroupDiv.childNodes[buttonGroupDiv.childNodes.length - 1].classList.contains("btn")) {
 
-    
+
               let div = document.createElement("div");
-              div.innerText = "Save";
-              div.classList.add('btn')
-              div.style.background = `url(${img})`
+              div.style.width = "100%";
+              let button = document.createElement("button");
+              button.classList.add('btn')
+              button.style.backgroundImage = `url(${img})`
+              button.style.backgroundRepeat = "no-repeat"
+              button.style.backgroundSize = 'contain'
+              button.style.width = "24px"
+              button.style.height = "24px"
+              button.style.backgroundColor = "transparent"
+              button.style.margin = "4px"
               buttonGroupDiv.style.backgroundColor = "#121212";
+              div.appendChild(button)
               buttonGroupDiv.prepend(div);
               btnNum = 1;
-              div.addEventListener("click", (event) => {
-                console.log("clicked");
 
+              ["click", "mouseover", "mouseout"].forEach(function (e) {
+                button.addEventListener(e, (event) => {
+                  if (event.type == "click") {
+                    console.log("click")
 
+                    if (messageContainer.childNodes.length == 2) {
+                      console.log("contained");
+                      console.log(messageContainer.childNodes[1].innerHTML);
+  
+                      chrome.storage.sync.set({
+                        message: messageContainer.childNodes[1].innerHTML
+                      });
+                    } else if (messageContainer.childNodes.length == 3) {
+                      console.log("alone");
+                      console.log(messageContainer.childNodes[2].innerHTML);
+  
+                      chrome.storage.sync.set({
+                        message: messageContainer.childNodes[2].innerHTML
+                      });
+                    } else if (messageContainer.childNodes.length == 4) {
+                      console.log("containsReply");
+                      console.log(messageContainer.childNodes[3].innerHTML + " ahh");
+  
+                      chrome.storage.sync.set({
+                        message: messageContainer.childNodes[3].innerHTML
+                      });
+                    }
 
-                console.log(messageContainer.childNodes.length != 3);
+                  } else if (event.type == "mouseover") {
+                    console.log("mouseover" + event.type);
+                    div.style.backgroundColor = "#4f545c29"
+                  } else if (event.type == "mouseout") {
+                    console.log("mouseover" + event.type);
+                    div.style.backgroundColor = "transparent"
+                  }
+                  console.log(messageContainer.childNodes.length != 3);
 
-                if (messageContainer.childNodes.length == 2) {
-                  console.log("contained");
-                  console.log(messageContainer.childNodes[1].innerHTML);
-
-                  chrome.storage.sync.set({
-                    message: messageContainer.childNodes[1].innerHTML
-                  });
-                } else if (messageContainer.childNodes.length == 3) {
-                  console.log("alone");
-                  console.log(messageContainer.childNodes[2].innerHTML);
-
-                  chrome.storage.sync.set({
-                    message: messageContainer.childNodes[2].innerHTML
-                  });
-                } else if (messageContainer.childNodes.length == 4) {
-                  console.log("containsReply");
-                  console.log(messageContainer.childNodes[3].innerHTML + " ahh");
-
-                  chrome.storage.sync.set({
-                    message: messageContainer.childNodes[3].innerHTML
-                  });
-                }
-
-
+                });
               });
+
+
             }
 
 
