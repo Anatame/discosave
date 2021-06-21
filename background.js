@@ -211,6 +211,7 @@ function injectMain() {
 
                     if (wrapper.childNodes.length == 1) {
                       wrapper.append(toolTip)
+                      wrapper.childNodes[1].style.opacity = "1"
                     } else {
                       wrapper.childNodes[1].style.opacity = "1"
                     }
@@ -220,7 +221,7 @@ function injectMain() {
                     wrapper.childNodes[1].style.opacity = "0d"
                     console.log("mouseover" + event.type);
                     div.style.backgroundColor = "transparent"
-                    toolTip.style.opacity = "0"
+                    wrapper.childNodes[1].style.opacity = "0"
                     console.log("ZEROOOOOOOOO")
                     button.style.backgroundImage = `url(${img})`
                   } else if (event.type == "mousedown") {
