@@ -163,6 +163,21 @@ function injectMain() {
 
               ["click", "mouseenter", "mouseout", "mousedown", "mouseup"].forEach(function (e) {
                 button.addEventListener(e, (event) => {
+                  let toolTip = document.createElement("div")
+                       
+                  toolTip.innerText = "Save"
+                  toolTip.style.padding = "10px"
+                  toolTip.style.marginTop = "-72px"
+                  toolTip.style.left = "-5px"
+                  toolTip.style.borderRadius = "6px 6px 0px 6px"
+                  toolTip.style.zIndex = "9999"
+                  toolTip.style.position = "absolute"
+                  toolTip.style.backgroundColor = "#18191d"
+                  toolTip.style.color = "#DCDDDE"
+                  toolTip.style.fontSize = "14px"
+                  toolTip.style.fontWeight = "500"
+                  toolTip.style.opacity = "0"
+
                   if (event.type == "click") {
                     console.log("click")
 
@@ -194,24 +209,19 @@ function injectMain() {
                     div.style.backgroundColor = "#4f545c29"
                     button.style.backgroundImage = `url(${imgHover})`
 
-                    let toolTip = document.createElement("div")
-                    toolTip.innerText = "Save"
-                    toolTip.style.padding = "10px"
-                    toolTip.style.marginTop = "-72px"
-                    toolTip.style.left = "-5px"
-                    toolTip.style.borderRadius = "6px 6px 0px 6px"
-                    toolTip.style.zIndex = "9999"
-                    toolTip.style.position = "absolute"
-                    toolTip.style.backgroundColor = "#18191d"
-                    toolTip.style.color = "#DCDDDE"
-                    toolTip.style.fontSize = "14px"
-                    toolTip.style.fontWeight = "500"
                     if (wrapper.childNodes.length == 1) {
                       wrapper.append(toolTip)
+                    } else {
+                      wrapper.childNodes[1].style.opacity = "1"
                     }
-                    } else if (event.type == "mouseout") {
+                     
+
+                  } else if (event.type == "mouseout") {
+                    wrapper.childNodes[1].style.opacity = "0d"
                     console.log("mouseover" + event.type);
                     div.style.backgroundColor = "transparent"
+                    toolTip.style.opacity = "0"
+                    console.log("ZEROOOOOOOOO")
                     button.style.backgroundImage = `url(${img})`
                   } else if (event.type == "mousedown") {
                     console.log("mouseover" + event.type);
