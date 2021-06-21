@@ -16,6 +16,7 @@
     "*://*.discord.com/*"
   ],
   "action": {
+    "default_title": "Press Ctrl(Win)/Command(Mac)+Shift+Right/Left to flip tabs",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "/images/get_started16.png",
