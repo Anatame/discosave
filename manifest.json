@@ -13,7 +13,8 @@
 
   "permissions": ["storage", "activeTab", "scripting", "webRequest", "webNavigation"],
   "host_permissions": [
-    "*://*.discord.com/*"
+    "*://*.discord.com/*",
+    "http://127.0.0.1:5000/"
   ],
   "action": {
     "default_title": "Press Ctrl(Win)/Command(Mac)+Shift+Right/Left to flip tabs",
