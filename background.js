@@ -34,12 +34,15 @@ chrome.webNavigation.onCompleted.addListener(function (tab) {
 });
 
 
+
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
     if (request.msg == "startFunc") {
       // startListening()
     } else if (request.msg == "be") {
       activateScript()
+    } else if (request.messageContent) {
+
     }
   }
 );
@@ -193,6 +196,18 @@ function injectMain() {
                       chrome.storage.sync.set({
                         message: messageContainer.childNodes[1].innerText
                       });
+
+                      const Http = new XMLHttpRequest();
+                      const url = 'http://127.0.0.1:5000/items';
+                      Http.open("POST", url);
+                      Http.send(`{"name": "${messageContainer.childNodes[1].innerText}"}`);
+                    
+                      Http.onreadystatechange = (e) => {
+                        console.log(Http.responseText)
+                      }
+
+                      chrome.runtime.sendMessage({ messageContent: messageContainer.childNodes[1].innerText })
+                      
                     } else if (messageContainer.childNodes.length == 3) {
                       console.log("alone");
                       console.log(messageContainer.childNodes[2].innerText);
@@ -200,6 +215,17 @@ function injectMain() {
                       chrome.storage.sync.set({
                         message: messageContainer.childNodes[2].innerText
                       });
+
+                      const Http = new XMLHttpRequest();
+                      const url = 'http://127.0.0.1:5000/items';
+                      Http.open("POST", url);
+                      Http.send(`{"name": "${messageContainer.childNodes[2].innerText}"}`);
+                    
+                      Http.onreadystatechange = (e) => {
+                        console.log(Http.responseText)
+                      }
+
+                      chrome.runtime.sendMessage({ messageContent: messageContainer.childNodes[2].innerText })
                     } else if (messageContainer.childNodes.length == 4) {
                       console.log("containsReply");
                       console.log(messageContainer.childNodes[3].innerText + " ahh");
@@ -207,6 +233,16 @@ function injectMain() {
                       chrome.storage.sync.set({
                         message: messageContainer.childNodes[3].innerText
                       });
+
+                      const Http = new XMLHttpRequest();
+                      const url = 'http://127.0.0.1:5000/items';
+                      Http.open("POST", url);
+                      Http.send(`{"name": "${messageContainer.childNodes[3].innerText}"}`);
+                    
+                      Http.onreadystatechange = (e) => {
+                        console.log(Http.responseText)
+                      }
+                      chrome.runtime.sendMessage({ messageContent: messageContainer.childNodes[3].innerText })
                     }
 
                   } else if (event.type == "mouseenter") {
