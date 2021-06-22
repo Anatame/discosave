@@ -41,8 +41,19 @@ chrome.runtime.onMessage.addListener(
       // startListening()
     } else if (request.msg == "be") {
       activateScript()
-    } else if (request.messageContent) {
+    }
 
+    if (request.messageContent) {
+      
+      const XHR = new XMLHttpRequest();
+      XHR.onreadystatechange = handleStateChange;
+      const url = 'http://127.0.0.1:5000/items';
+      XHR.open("POST", url);
+      Http.send(`{"name": "${request.messageContent}"}`);
+    
+      Http.onreadystatechange = (e) => {
+        console.log(Http.responseText)
+      }
     }
   }
 );
@@ -197,14 +208,6 @@ function injectMain() {
                         message: messageContainer.childNodes[1].innerText
                       });
 
-                      const Http = new XMLHttpRequest();
-                      const url = 'http://127.0.0.1:5000/items';
-                      Http.open("POST", url);
-                      Http.send(`{"name": "${messageContainer.childNodes[1].innerText}"}`);
-                    
-                      Http.onreadystatechange = (e) => {
-                        console.log(Http.responseText)
-                      }
 
                       chrome.runtime.sendMessage({ messageContent: messageContainer.childNodes[1].innerText })
                       
@@ -216,14 +219,7 @@ function injectMain() {
                         message: messageContainer.childNodes[2].innerText
                       });
 
-                      const Http = new XMLHttpRequest();
-                      const url = 'http://127.0.0.1:5000/items';
-                      Http.open("POST", url);
-                      Http.send(`{"name": "${messageContainer.childNodes[2].innerText}"}`);
                     
-                      Http.onreadystatechange = (e) => {
-                        console.log(Http.responseText)
-                      }
 
                       chrome.runtime.sendMessage({ messageContent: messageContainer.childNodes[2].innerText })
                     } else if (messageContainer.childNodes.length == 4) {
@@ -234,19 +230,12 @@ function injectMain() {
                         message: messageContainer.childNodes[3].innerText
                       });
 
-                      const Http = new XMLHttpRequest();
-                      const url = 'http://127.0.0.1:5000/items';
-                      Http.open("POST", url);
-                      Http.send(`{"name": "${messageContainer.childNodes[3].innerText}"}`);
-                    
-                      Http.onreadystatechange = (e) => {
-                        console.log(Http.responseText)
-                      }
+                      
+                      
                       chrome.runtime.sendMessage({ messageContent: messageContainer.childNodes[3].innerText })
                     }
 
                   } else if (event.type == "mouseenter") {
-                    console.log("mouseenter" + event.type);
                     div.style.backgroundColor = "#4f545c29"
                     button.style.backgroundImage = `url(${imgHover})`
 
@@ -260,16 +249,15 @@ function injectMain() {
 
                   } else if (event.type == "mouseout") {
                     wrapper.childNodes[1].style.opacity = "0d"
-                    console.log("mouseover" + event.type);
                     div.style.backgroundColor = "transparent"
                     wrapper.childNodes[1].style.opacity = "0"
                     console.log("ZEROOOOOOOOO")
                     button.style.backgroundImage = `url(${img})`
                   } else if (event.type == "mousedown") {
-                    console.log("mouseover" + event.type);
+                   
                     button.style.backgroundImage = `url(${imgClick})`
                   } else if (event.type == "mouseup") {
-                    console.log("mouseover" + event.type);
+                  
                     button.style.backgroundImage = `url(${imgHover})`
                   }
 
