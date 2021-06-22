@@ -9,7 +9,9 @@ let div = document.createElement("div");
 let list = document.querySelector(".list")
 
 button.addEventListener("click", (e) => {
-
+   chrome.runtime.sendMessage({ msg: 'login' }, (response) => {
+      if (response === 'success') window.location.replace('./popup-sign-out.html')
+   })
 })
 
 

@@ -11,7 +11,7 @@
     "matches": [ "https://discord.com/*" ]
   }],
 
-  "permissions": ["storage", "activeTab", "scripting", "webRequest", "webNavigation"],
+  "permissions": ["storage", "activeTab", "scripting", "webRequest", "webNavigation", "identity"],
   "host_permissions": [
     "http://*/",
     "*://*.discord.com/*",
