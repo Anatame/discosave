@@ -1,5 +1,16 @@
 let color = "#3aa757";
 
+function getParameterByName(name, url = "") {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+
+
 const DISCORD_URL = "https://discord.com/api/oauth2/authorize";
 const CLIENT_ID = encodeURIComponent("855041441902493736");
 const RESPONSE_TYPE = encodeURIComponent("token");
@@ -8,12 +19,14 @@ const STATE = encodeURIComponent("waterff99");
 const SCOPE = encodeURIComponent("identify email");
 // https://djleobblkcfjfgkiodedcjhdjmhjmmkg/chromium.app/
 let user_signed_in = false;
-console.log(chrome.identity.getRedirectURL())
+console.log(chrome.identity.getRedirectURL());
 
 function get_discord_uri() {
-  let nonce = encodeURIComponent(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15));
-  const url =
-    `${DISCORD_URL}
+  let nonce = encodeURIComponent(
+    Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15)
+  );
+  const url = `${DISCORD_URL}
 ?client_id=${CLIENT_ID}
 &response_type=${RESPONSE_TYPE}
 &redirect_uri=${REDIRECT_URI}
@@ -23,8 +36,6 @@ function get_discord_uri() {
 
   return url;
 }
-
-
 
 chrome.storage.sync.set({
   svg: chrome.runtime.getURL("/images/savewhite.svg"),
@@ -74,6 +85,21 @@ async function postData(url = "", data = {}) {
   return response.json(); // parses JSON response into native JavaScript objects
 }
 
+async function getUserData(url, token) {
+  console.log(token)
+  response = await fetch(url, {
+    method: 'GET', // or 'PUT'
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+}
+
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.msg == "startFunc") {
     // startListening()
@@ -86,13 +112,25 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         interactive: true,
       },
       function (redirect_uri) {
-        console.log(redirect_uri)
-        if (chrome.runtime.lastError || redirect_uri.includes('access_denied')) {
+        let url = new URL(redirect_uri)
+        getUserData("https://discordapp.com/api/users/@me", getParameterByName('access_token', redirect_uri))
+        console.log(redirect_uri);
+        if (
+          chrome.runtime.lastError ||
+          redirect_uri.includes("access_denied")
+        ) {
           sendResponse("fail");
-          return
+          return;
         } else {
           user_signed_in = true;
-          sendResponse('success');
+
+          // fetchUser: (data) =>
+          //   axios.get(`https://discordapp.com/api/users/@me`, {
+          //     headers: { Authorization: `Bearer ${data.access_token}` },
+          //   });
+          
+
+          sendResponse("success");
         }
       }
     );
@@ -100,7 +138,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   } else if (request.msg == "logout") {
     user_signed_in = false;
     sendResponse("success");
-    return false
+    return false;
   }
 
   if (request.messageContent) {
