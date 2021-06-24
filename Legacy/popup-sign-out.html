@@ -5,21 +5,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="button.css">
+  <link rel="stylesheet" href="signOut.css">
 </head>
 
 <body>
 
   <body>
-    <div id="changeColor"></div>
-
-    <section id="authorizeSection">
-      <div>
-
-        <button id="logout">Logout</button>
-
+    <div class="parentDiv">
+      <div class="profileContainer">
+        <img class="circleImage avatarImage" src="https://i.pravatar.cc/100" />
+        <h3 class="userName">DiscoSave <span>#0002</span></h3>
+        <h3 class="userID">UserID: <span>654216497854546191</span></h3>
       </div>
-    </section>
+
+
+      <div class="authorize-bot-container">
+        <button class="button">Add Bot</button>
+      </div>
+
+      <div class="channelContainer">
+        <h3 class="channelHeader">SELECT PIN CHANNEL</h3>
+        <button class="channelContainerBtn">#discolog</button>
+      </div>
+
+
+
+
+      <div class="logout-container">
+        <button id="logout" class="logout-btn">Logout</button>
+      </div>
+    </div>
+
 
     <script src="popup-sign-out-script.js"></script>
   </body>

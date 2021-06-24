@@ -1,5 +1,4 @@
 // Initialize button with user's preferred color
-let changeColor = document.getElementById("changeColor");
 let button = document.getElementById("authorize")
 
 

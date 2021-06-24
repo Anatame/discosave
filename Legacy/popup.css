@@ -1,17 +1,36 @@
-button {
-   height: 30px;
-   width: 100px;
-   outline: none;
-   margin: 10px;
-   border: none;
-   border-radius: 2px;
- }
- 
- button.current {
-   box-shadow: 0 0 0 2px white,
-               0 0 0 4px black;
- }
+*{
+  margin: 0;
+}
+body {
+  border-radius: 8px;
+}
+.popupdiv{ 
+  height: 450px;
+  width:350px;
+  background-color: #18191C;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+}
 
- .listItems{
+.button{
+  height: 40px;;
+  width: 120px;
+  border-radius: 4px;
+  background-color: #5895F2;
+  color: white;
+  border: none;
+  outline: none;
+}
 
- }
+.button:hover{
+  height: 45px;
+  width: 125px;
+  font-size: 14px;
+}
+
+.button:active{
+  height: 40px;
+  margin-top: 6px;
+}
+
