@@ -17,6 +17,7 @@
    border-radius: 8px;
    padding-left: 30px;
    padding-right: 30px;
+   padding-bottom: 30px;
    box-shadow: 0 8px 16px rgba(0,0,0,0.24)
  }
 
@@ -34,10 +35,11 @@
     font-size: 18px
  }
 
- .userName span{
+.tag{
     color: gray;
-    font-size: 16px
- }
+    font-size: 16px;
+    margin-left: 5px;
+ } 
 
  .userID{
    margin-top: 20px;
@@ -77,14 +79,15 @@
    color: white;
    display: flex;
    justify-content:center;
-   visibility: visible;
+
  }
 
  .channelContainer{
-    margin-top:80px;
+  margin-top:80px;
    color: white;
    visibility: visible;
    position: relative;
+   display: none;
  }
 
  .channelHeader{
@@ -109,6 +112,7 @@
   top: 70px;
   width: 100%;
   padding-bottom: 50px;
+  display: none;
  }
 
  .item{
@@ -142,5 +146,4 @@
    outline: none;
    background: none;
  }
- 
  
