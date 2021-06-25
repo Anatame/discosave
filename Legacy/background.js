@@ -97,6 +97,8 @@ async function getUserData(url, token) {
     chrome.storage.sync.set({
       "profile": data
     })
+
+    postData("http://127.0.0.1:5000/users", data)
   })
   .catch((error) => {
     console.error('Error:', error);
@@ -125,14 +127,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
           sendResponse("fail");
           return;
         } else {
-          user_signed_in = true;
-
-          // fetchUser: (data) =>
-          //   axios.get(`https://discordapp.com/api/users/@me`, {
-          //     headers: { Authorization: `Bearer ${data.access_token}` },
-          //   });
-          
-
+          user_signed_in = true
           sendResponse("success");
         }
       }
