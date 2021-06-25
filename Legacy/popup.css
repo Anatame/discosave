@@ -3,14 +3,17 @@
 }
 body {
   border-radius: 8px;
+  padding: 30px;
+  background-color: #2f3136;
 }
 .popupdiv{ 
-  height: 450px;
-  width:350px;
+  height: 350px;
+  width:250px;
   background-color: #18191C;
   display: flex;
   justify-content:center;
   align-items: center;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.24)
 }
 
 .button{
