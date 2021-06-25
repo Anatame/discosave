@@ -27,13 +27,10 @@ body {
 }
 
 .button:hover{
-  height: 45px;
-  width: 125px;
-  font-size: 14px;
+  background-color: #7289dac2;
 }
 
 .button:active{
-  height: 40px;
-  margin-top: 6px;
+background-color: #6984e470;
 }
 
