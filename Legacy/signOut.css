@@ -73,21 +73,20 @@
   background-color: #6984e470;
  }
 
-
+/* 
  .authorize-bot-container{
    margin-top:100px;
    color: white;
    display: flex;
    justify-content:center;
 
- }
+ } */
 
  .channelContainer{
   margin-top:80px;
    color: white;
    visibility: visible;
    position: relative;
-   display: none;
  }
 
  .channelHeader{

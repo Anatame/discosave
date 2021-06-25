@@ -1,5 +1,8 @@
 let color = "#3aa757";
 
+//open a new browser window
+
+
 function getParameterByName(name, url = "") {
     name = name.replace(/[\[\]]/g, '\\$&');
     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -16,7 +19,7 @@ const CLIENT_ID = encodeURIComponent("855041441902493736");
 const RESPONSE_TYPE = encodeURIComponent("token");
 const REDIRECT_URI = encodeURIComponent(chrome.identity.getRedirectURL());
 const STATE = encodeURIComponent("waterff99");
-const SCOPE = encodeURIComponent("identify email");
+const SCOPE = encodeURIComponent("identify email bot");
 // https://djleobblkcfjfgkiodedcjhdjmhjmmkg/chromium.app/
 let user_signed_in = false;
 console.log(chrome.identity.getRedirectURL());
@@ -137,6 +140,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     user_signed_in = false;
     sendResponse("success");
     return false;
+  } 
+
+  if (request.msg == "botAuth") {
   }
 
   if (request.messageContent) {
